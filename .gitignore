@@ -1,0 +1,21 @@
+# Fichiers temporaires
+*~
+
+# Fichiers de sauvegarde
+*.bak
+
+# Fichiers de configuration spécifiques à l'environnement
+.env
+
+# Répertoires de dépendances externes
+/node_modules/
+
+# Fichiers de compilation ou générés
+*.pyc
+
+# Fichiers CSV de taille importante (plus de 10 Mo)
+*.csv[20M]
+
+DATA
+db.sqlite3
+settings.py
