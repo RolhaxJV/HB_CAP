@@ -7,30 +7,26 @@ def run():
     """
     try:
         # Lire CSV
-        df = pd.read_csv(f"{DATA_DIR}/clubs-data-2021.csv", delimiter=';')
+        df = pd.read_csv(f"{DATA_DIR}/flux-total-dep.csv", delimiter=',', encoding="'ISO-8859-1")
 
         # Truncate
-        ODS_CLUBS.objects.all().delete()
+        ODS_FTD.objects.all().delete()
 
         objs = []
-        for index, row in df.iterrows():
-            obj = ODS_CLUBS(
-                code_commune = row["Code Commune"],
-                commune = row["Commune"],
-                code_QPV = row["Code QPV"],
-                nom_QPV = row["Nom QPV"],
-                departement = row["Département"],
-                region = row["Région"],
-                statut_geo = row["Statut géo"],
-                code = row["Code"],
-                federation = row["Fédération"],
-                clubs = row["Clubs"],
-                EPA = row["EPA"],
-                Total = row["Total"]
+        for index,row in df.iterrows():
+            obj = ODS_FTD(
+                code_region = row["code_region"],
+                libelle_region = row["libelle_region"],
+                code_departement = row["code_departement"],
+                libelle_departement = row["libelle_departement"],
+                date_fin_semaine = row["date_fin_semaine"],
+                type_de_vaccin = row["type_de_vaccin"],
+                nb_ucd = row["nb_ucd"],
+                nb_doses = row["nb_doses"]
             )
             objs.append(obj)
 
         # Bulk create des objets
-        ODS_CLUBS.objects.bulk_create(objs)
+        ODS_FTD.objects.bulk_create(objs)
     except KeyError as e:
         print(e)

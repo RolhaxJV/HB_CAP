@@ -2,22 +2,22 @@ from django.db import models
 
 # Table d'ODS
 class ODS_FTD(models.Model):
-    code_region = models.CharField(max_length = 100, default='0')
-    libelle_region = models.CharField(max_length = 100, default='0')
-    code_departement = models.CharField(max_length = 100, default='0')
-    libelle_departement = models.CharField(max_length = 100, default='0')
-    date_fin_semaine = models.CharField(max_length = 100, default='0')
-    type_de_vaccin = models.CharField(max_length = 100, default='0')
-    nb_ucd = models.CharField(max_length = 100, default='0')
-    nb_doses = models.CharField(max_length = 100, default='0')
+    code_region = models.CharField(max_length = 100)
+    libelle_region = models.CharField(max_length = 100)
+    code_departement = models.CharField(max_length = 100)
+    libelle_departement = models.CharField(max_length = 100)
+    date_fin_semaine = models.CharField(max_length = 100)
+    type_de_vaccin = models.CharField(max_length = 100)
+    nb_ucd = models.CharField(max_length = 100)
+    nb_doses = models.CharField(max_length = 100)
     
     def __str__(self) -> str:
         return f"{self.code_region} - {self.code_departement}"
 
 # region Tables Dimensions
 class D_Depart(models.Model):
-    code_region = models.IntegerField()
-    code_depart = models.IntegerField()
+    code_region = models.CharField(max_length = 100, default=None)
+    code_depart = models.CharField(max_length = 100, default=None)
     label_region = models.CharField(max_length = 100, default=None)
     label_depart = models.CharField(max_length = 100, default=None)
     
@@ -32,8 +32,8 @@ class D_Date(models.Model):
 
 # Table de Fait
 class F_Dose(models.Model):
-    nb_ucd = models.IntegerField()
-    nb_dose = models.IntegerField()
+    nb_ucd = models.FloatField()
+    nb_dose = models.FloatField()
     
     pk_dose = models.CharField(max_length=100, primary_key=True, default=None)
     
