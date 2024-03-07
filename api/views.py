@@ -17,6 +17,15 @@ class Detail_Table(generics.RetrieveUpdateDestroyAPIView):
     # permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
+        """
+        Returns the serializer class based on the 'table' parameter provided in the kwargs.
+
+        Parameters:
+            self: The instance of the class.
+        
+        Return:
+            The serializer class based on the 'table' parameter. Returns None if the 'table' parameter is not recognized.
+        """
         table = self.kwargs['table']
         serializer_class = None
 
@@ -34,6 +43,9 @@ class Detail_Table(generics.RetrieveUpdateDestroyAPIView):
         return serializer_class
 
     def get_queryset(self):
+        """
+        This function returns the queryset based on the table and primary key provided as parameters.
+        """
         table = self.kwargs['table']
         pk = self.kwargs['pk']
         
@@ -49,6 +61,9 @@ class Detail_Table(generics.RetrieveUpdateDestroyAPIView):
             return None
 
     def get(self, request, *args, **kwargs):
+        """
+        A description of the entire function, its parameters, and its return types.
+        """
         serializer_class = self.get_serializer_class()
         queryset = self.get_queryset()
 
@@ -69,6 +84,16 @@ class List_Table(APIView):
     # permission_classes = [IsAuthenticated]
     
     def get(self, request, format=None):
+        """
+        A function to handle GET requests with optional format parameter.
+        
+        Parameters:
+            request: The HTTP request object
+            format: The format of the response (default is None)
+        
+        Returns:
+            A response containing data from the specified table
+        """
         table = self.request.query_params.get('table', None)
         match table:
             case 'Dose':

@@ -1,6 +1,8 @@
-from covid_project.settings import DIS_TOKEN
 from discord import Intents,Message,Client
-import Vac_Sem
+from django_discord import DiscordBot
+from scripts import Vac_Sem
+from covid_project.settings import DIS_TOKEN
+
 intents = Intents.default()
 intents.message_content = True
 client = Client(intents=intents)
@@ -18,10 +20,18 @@ def get_response(user_input):
     - Otherwise, returns None
     """
     mess = user_input.lower()
+    if '[' not in mess or ']' not in mess:
+        return "Demande incorrecte"
+
+    L = user_input.split("[")[1].split("]")[0].split(",")
+    year = int(L[0])
+    depart_id = L[1]
+
     if mess == '':
         return 'silencieux'
-    elif 'cap_bot' in mess:
-        return "Donnes demander : + GitHub : https://github.com/RolhaxJV/HB_CAP"
+    elif 'jv_cap_bot' in mess:
+        nb_dose = Vac_Sem.find_data(year,depart_id)
+        return f"Nombre de dose pour l'années {year} et le departement {depart_id} : {nb_dose} \n GitHub : https://github.com/RolhaxJV/HB_CAP"
     else:
         return 
 
@@ -84,3 +94,4 @@ def start():
         None
     """
     client.run(token=DIS_TOKEN)
+start()
