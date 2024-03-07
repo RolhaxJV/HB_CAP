@@ -1,5 +1,4 @@
 from discord import Intents,Message,Client
-from django_discord import DiscordBot
 from scripts import Vac_Sem
 from covid_project.settings import DIS_TOKEN
 
