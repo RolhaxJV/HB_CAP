@@ -54,7 +54,7 @@ class Detail_Table(generics.RetrieveUpdateDestroyAPIView):
         elif table == 'type':
             return D_Type.objects.filter(pk=pk)
         elif table == 'departement':
-            return D_Departement.objects.filter(pk=pk)
+            return D_Depart.objects.filter(pk=pk)
         elif table == 'dose':
             return F_Dose.objects.filter(pk=pk)
         else:
@@ -96,16 +96,16 @@ class List_Table(APIView):
         """
         table = self.request.query_params.get('table', None)
         match table:
-            case 'Dose':
+            case 'dose':
                 queryset = F_Dose.objects.all()
                 serializer_class = F_Dose_Serializer
-            case 'Date':
+            case 'date':
                 queryset = D_Date.objects.all()
                 serializer_class = D_Date_Serializer
-            case 'Departement':
-                queryset = D_Departement.objects.all()
-                serializer_class = D_Departement_Serializer
-            case 'Type':
+            case 'departement':
+                queryset = D_Depart.objects.all()
+                serializer_class = D_Depart_Serializer
+            case 'type':
                 queryset = D_Type.objects.all()
                 serializer_class = D_Type_Serializer
             case _:
