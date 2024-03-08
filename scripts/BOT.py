@@ -15,20 +15,24 @@ def get_response(user_input):
     
     Returns:
     - If user_input is empty, returns 'silencieux'
-    - If 'cap_bot' is in user_input, returns "Donnes demander : + GitHub : https://github.com/RolhaxJV/HB_CAP"
+    - If 'cap_bot' is in user_input, returns "Donnes demander : + lien GitHub "
     - Otherwise, returns None
     """
     mess = user_input.lower()
-    if '[' not in mess or ']' not in mess:
-        return "Demande incorrecte"
-
-    L = user_input.split("[")[1].split("]")[0].split(",")
-    year = int(L[0])
-    depart_id = L[1]
 
     if mess == '':
         return 'silencieux'
-    elif 'jv_cap_bot' in mess:
+    if 'jv_cap_bot' in mess:
+        if '[' not in mess or ']' not in mess:
+            return "Demande incorrecte"
+
+        L = user_input.split("[")[1].split("]")[0].split(",")
+        year = int(L[0])
+        depart_id = L[1]
+
+        if year == None or year == '' or depart_id == None or depart_id == '':
+            return "Données incorrecte"
+
         nb_dose = Vac_Sem.find_data(year,depart_id)
         return f"Nombre de dose pour l'années {year} et le departement {depart_id} : {nb_dose} \n GitHub : https://github.com/RolhaxJV/HB_CAP"
     else:
