@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import serializers
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import  SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from rest_framework import generics
@@ -11,10 +11,7 @@ from app.models import D_Date,D_Depart,D_Type,F_Dose
 from api.serializers import D_Depart_Serializer,D_Date_Serializer,D_Type_Serializer,F_Dose_Serializer
 
 
-
 class Detail_Table(generics.RetrieveUpdateDestroyAPIView):
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
         """
@@ -60,6 +57,8 @@ class Detail_Table(generics.RetrieveUpdateDestroyAPIView):
         else:
             return None
 
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request, *args, **kwargs):
         """
         A description of the entire function, its parameters, and its return types.
@@ -80,8 +79,8 @@ class Detail_Table(generics.RetrieveUpdateDestroyAPIView):
 
 
 class List_Table(APIView):
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
     
     def get(self, request, format=None):
         """
@@ -94,6 +93,7 @@ class List_Table(APIView):
         Returns:
             A response containing data from the specified table
         """
+
         table = self.request.query_params.get('table', None)
         match table:
             case 'dose':

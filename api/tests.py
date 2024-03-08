@@ -1,6 +1,7 @@
 from django.test import TestCase
 from rest_framework.test import APIRequestFactory
 from api.views import Detail_Table,List_Table
+from covid_project.settings import API_KEY
 import json
 
 factory = APIRequestFactory()
@@ -10,8 +11,7 @@ table = 'dose'
 pk = 'AstraZeneca_2021-06-13_84_63_Puy-de-Dôme'
 # region test Detail 
 view = Detail_Table.as_view()
-req = factory.get('Detail/')
-
+req = factory.get('Detail/',headers={'Authorization': API_KEY})
 do_res_tg = view(req, table=table, pk=pk)
 do_res_tg.render()
 do_json_res_tg = json.loads(do_res_tg.content)
@@ -30,7 +30,7 @@ do_res_gip.render()
 # region test List
 view = List_Table.as_view()
 
-req = factory.get('List/',{'table': table})
+req = factory.get('List/',{'table': table},headers={'Authorization': API_KEY})
 do_res_ndl = view(req)
 # endregion
 # endregion
@@ -71,7 +71,7 @@ table = 'date'
 pk = '2021-06-13'
 # region test Detail 
 view = Detail_Table.as_view()
-req = factory.get('Detail/')
+req = factory.get('Detail/',headers={'Authorization': API_KEY})
 
 da_res_tg = view(req, table=table, pk=pk)
 da_res_tg.render()
@@ -91,7 +91,7 @@ da_res_gip.render()
 # region test List
 view = List_Table.as_view()
 
-req = factory.get('List/',{'table': table})
+req = factory.get('List/',{'table': table},headers={'Authorization': API_KEY})
 da_res_ndl = view(req)
 # endregion
 # endregion
@@ -127,7 +127,7 @@ table = 'departement'
 pk = '84_63_Puy-de-Dôme'
 # region test Detail 
 view = Detail_Table.as_view()
-req = factory.get('Detail/')
+req = factory.get('Detail/',headers={'Authorization': API_KEY})
 
 de_res_tg = view(req, table=table, pk=pk)
 de_res_tg.render()
@@ -147,7 +147,7 @@ de_res_gip.render()
 # region test List
 view = List_Table.as_view()
 
-req = factory.get('List/',{'table': table})
+req = factory.get('List/',{'table': table},headers={'Authorization': API_KEY})
 de_res_ndl = view(req)
 # endregion
 # endregion
@@ -187,7 +187,7 @@ table = 'type'
 pk = 'Pfizer'
 # region test Detail
 view = Detail_Table.as_view()
-req = factory.get('Detail/')
+req = factory.get('Detail/',headers={'Authorization': API_KEY})
 
 ty_res_tg = view(req, table=table, pk=pk)
 ty_res_tg.render()
@@ -207,7 +207,7 @@ ty_res_gip.render()
 # region test List
 view = List_Table.as_view()
 
-req = factory.get('List/',{'table': table})
+req = factory.get('List/',{'table': table},headers={'Authorization': API_KEY})
 ty_res_ndl = view(req)
 # endregion
 # endregion
