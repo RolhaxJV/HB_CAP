@@ -1,7 +1,9 @@
 from app.models import ODS_FTD,D_Date,D_Depart,D_Type
 
 def run():
-    """ Remplis les tables DWH """
+    """
+    A function that attempts to call three other functions and catches a KeyError if it occurs.
+    """
     try:
         colonnes_Type()
         colonnes_Date()
@@ -11,7 +13,9 @@ def run():
 
 
 def colonnes_Date():
-    """ """
+    """
+    This function retrieves distinct date_fin_semaine values from ODS_FTD and creates D_Date objects for each value. It then bulk creates the D_Date objects. If a KeyError occurs during the process, it prints the error message.
+    """
     queryset = ODS_FTD.objects.values('date_fin_semaine').distinct()
 
     l = []
@@ -29,7 +33,9 @@ def colonnes_Date():
         print(e)
 
 def colonnes_Departement():
-    """ """
+    """
+    This function retrieves unique values for code_region, code_departement, libelle_region, and libelle_departement from the ODS_FTD model, creates D_Depart objects based on the retrieved values, and bulk creates them. It also prints "Depart : OK" if successful, or prints the KeyError if it occurs.
+    """
     queryset = ODS_FTD.objects.values('code_region', 'code_departement', 'libelle_region', 'libelle_departement').distinct()
 
     l = []

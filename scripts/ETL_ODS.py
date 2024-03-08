@@ -3,8 +3,9 @@ from app.models import ODS_FTD
 from covid_project.settings import DATA_DIR
 
 def run():
-    """ Remplis la table ods_clubs
-    """
+	"""
+	Run function to read a CSV file, truncate a database table, iterate through the CSV data to create objects, and bulk create the objects in the database. Catches a KeyError and prints the error.
+	"""
     try:
         # Lire CSV
         df = pd.read_csv(f"{DATA_DIR}/flux-total-dep.csv", delimiter=',', encoding="'ISO-8859-1")
