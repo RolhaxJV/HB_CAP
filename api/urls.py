@@ -1,5 +1,5 @@
 """
-URL configuration for covid_project project.
+URL configuration for project project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -14,11 +14,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from api import urls as api_urls
+from django.urls import path
+from api.views import Detail_Table,List_Table
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include(api_urls)),
+    path('List/', List_Table.as_view(), name='list-table',),
+    path('Detail/<str:table>/<str:pk>/', Detail_Table.as_view(), name='detail-tables'),
 ]
