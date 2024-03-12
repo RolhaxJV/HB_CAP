@@ -2,25 +2,25 @@ import pandas as pd
 from app.models import ODS_FTD,D_Date,D_Depart,D_Type,F_Dose
 
 def run():
-    """ Remplis les tables DWH """
+    """
+    A function that runs a series of operations using cache and database queries, and handles any KeyError exceptions that occur.
+    """
     try:
-        # Table de dimension
         type_cache = {type.label: type for type in D_Type.objects.all()}
         date_cache = {date.date: date for date in D_Date.objects.all()} 
         depart_cache = {depart.pk_depart: depart for depart in D_Depart.objects.all()}
-
-        # Tables de Fait Dose
+        
         print("Dose")
 
         F_Dose.objects.all().delete()
         df = pd.DataFrame(list(ODS_FTD.objects.all().values())).query('nb_ucd != "nan" and nb_doses != "nan"')
-        
+
         existing_pks = set()
         doses = []
         for index, row in df.iterrows():
             if len(row['code_departement']) == 1:
                 row['code_departement'] = "0" + row['code_departement']
-            
+
             nb_ucd = row['nb_ucd']
             nb_dose = row['nb_doses']
             date = next((value for value in date_cache.values() if str(value.date) == row['date_fin_semaine']), None)

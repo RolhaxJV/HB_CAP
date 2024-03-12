@@ -13,11 +13,20 @@ def find_date(S_year):
         date: The calculated date in the past.
     """
     date_now = datetime.now()
+    sem_now = date_now.isocalendar()[1]
+    
+    
     sub = date_now.year - S_year
     if sub < 0:
         return None
-    date_past = date(date_now.year - sub, date_now.month, date_now.day - sub)
-
+    date_past = date(date_now.year - sub, date_now.month, date_now.day )
+    sem_past = date_past.isocalendar()[1]
+    
+    diff_sem = sem_now - sem_past
+    if diff_sem >= 1:
+        date_past = date(2021,date_past.month,date_past.day + 7 * diff_sem)
+        sem_past = date_past.isocalendar()[1]
+        
     weekday = date_past.isocalendar().weekday
     diff = 0
     if weekday != 7:

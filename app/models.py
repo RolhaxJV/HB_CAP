@@ -1,6 +1,6 @@
 from django.db import models
 
-# Table d'ODS
+# Table ODS
 class ODS_FTD(models.Model):
     code_region = models.CharField(max_length = 100)
     libelle_region = models.CharField(max_length = 100)
@@ -14,7 +14,7 @@ class ODS_FTD(models.Model):
     def __str__(self) -> str:
         return f"{self.code_region} - {self.code_departement}"
 
-# region Tables Dimensions
+# region Dimensions
 class D_Depart(models.Model):
     code_region = models.CharField(max_length = 100, default=None)
     code_depart = models.CharField(max_length = 100, default=None)
@@ -30,7 +30,7 @@ class D_Date(models.Model):
     date = models.DateField(primary_key=True)
 # endregion
 
-# Table de Fait
+# Table Fait
 class F_Dose(models.Model):
     nb_ucd = models.FloatField()
     nb_dose = models.FloatField()
